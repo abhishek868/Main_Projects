@@ -1,0 +1,24 @@
+
+
+##Test has dataframe with all rows
+==================================
+
+Below code is for extrating the line matched by the regex we write.This code will extract that line and will replace that line with old junk lines.
+============================================
+Only the lines picked by regex will be there
+============================================
+
+
+temp = list(map(lambda x: re.findall("(?=(^.*(?<![A-Z])(CUSTOMER|USER|CX|HE|SHE|CU|CUX|CUS|CLINT|CLIENT|CUSTOME).{1,20}(?<![A-Z])(REQUEST|SAYS|WANTS).{1,20}(?<![A-Z])(CANCEL|NO SERVICE|CANCLE).*$))(?!(^.*(?<![A-Z])(AVAILABLE|SCHEDULE|RESCHEDULE|PART|MONTH|WEEK|RESOL|FINE|REPLACE|WELL|WORK|WORKFINE|FIX|FUNCTIONAL|FIX|NORMAL|SOLVE|NBD|UNIT|OFFICE|RETURN|REFUND|ADDRESS|DIFFERENT|COUNTRY|LEAVE|REPAIR|BOX|EXCHANGE|POS|CONTACT|INFO|ISSUE|EXG).*$))", x , re.MULTILINE),  test.NOTES_COE))
+#
+#temp = list(map(lambda x: x[0][0] if len(x) > 0 else "", temp))
+
+
+temp = list(map(lambda x: [y[0] for y in x] if len(x)>0 else "", temp))
+
+temp =list(map(lambda x: "\n".join(x), temp))   
+
+
+test_1.loc[list(map(lambda x: len(x)> 0, temp)), "NOTES_COE"] = list(filter(lambda x: len(x) > 0, temp))
+
+
